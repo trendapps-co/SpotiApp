@@ -1,42 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { element } from 'protractor';
+import { SpotifyService } from '../../services/spotify.service';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styles: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent  {
+newSongs: any[] = [];
+loading: boolean;
 
- usuarios: Usuario[] = [];
- info:any[]=[];
-
-  constructor( private http: HttpClient) {
-    this.http.get('https://getmystyle.herokuapp.com/Users')
-    .subscribe( (resp: any ) => {
-      this.info = resp.message;
-      for (const key in this.info) {
-        if (this.info.hasOwnProperty(key)) {
-          const element = this.info[key];
-          // console.log(element.email);
-          this.usuarios.push({name: element.name, email: element.email});
-        }
-      }
-
-
-    });
-
-    console.log(this.usuarios);
+  constructor(private spotify: SpotifyService) {
+    this.loading = true;
+    this.spotify.getNewReleases()
+                .subscribe( (resp: any) => {
+                  this.newSongs = resp;
+                  this.loading = false;
+                });
    }
 
-  ngOnInit() {
-  }
 
 
 }
 
-export interface Usuario {
-  name: string;
-  email: string;
-}
+

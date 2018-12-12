@@ -1,17 +1,4 @@
-<table class="table">
-    <caption>Lista de usuarios</caption>
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of usuarios; let i = index">
-            <td>{{i+1}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.name}}</td>
-        </tr>
-    </tbody>
-</table>
+<app-loading *ngIf="loading"></app-loading>
+
+
+<app-cards [items]="newSongs"></app-cards>
